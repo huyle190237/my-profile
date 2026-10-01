@@ -80,24 +80,47 @@
             border-color: rgba(0, 243, 255, 0.8);
             transform: translateY(-5px);
         }
-
-        /* Avatar Animation */
         .avatar-container {
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
+    position: relative;
+    /* --- BẮT ĐẦU: Chỉnh kích thước to hơn ở đây --- */
+    width: 350px;  /* Chiều rộng to hơn (Bạn có thể tăng lên 400px nếu muốn to hơn nữa) */
+    height: 350px; /* Chiều cao phải BẰNG chiều rộng để tạo hình tròn */
+    /* --- KẾT THÚC: Chỉnh kích thước --- */
+    
+    margin: 0 auto; /* Căn giữa */
+    border-radius: 50%; /* Đảm bảo khung chứa là hình tròn */
+    animation: float 6s ease-in-out infinite;
+}
 
-        .avatar-container::before {
-            content: '';
-            position: absolute;
-            top: -5px; right: -5px; bottom: -5px; left: -5px;
-            background: linear-gradient(45deg, #00f3ff, #ff00ea, #00f3ff);
-            border-radius: 50%;
-            z-index: -1;
-            background-size: 400%;
-            animation: gradientBorder 3s linear infinite;
-            filter: blur(8px);
-        }
+/* Đảm bảo ảnh bên trong lấp đầy và bo tròn theo khung */
+.avatar-container img { 
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%; /* Ảnh hình tròn */
+    position: relative;
+    z-index: 1;
+}
+
+.avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -8px; right: -8px; bottom: -8px; left: -8px; /* Tăng khoảng cách viền một chút để cân xứng với ảnh to */
+    background: linear-gradient(45deg, #00f3ff, #ff00ea, #00f3ff);
+    border-radius: 50%; /* Giữ viền phát sáng là hình tròn */
+    z-index: 0;
+    background-size: 400%;
+    animation: gradientBorder 3s linear infinite;
+    filter: blur(10px); /* Tăng độ blur một chút cho mượt */
+}
+
+/* Cân đối lại trên màn hình điện thoại nhỏ */
+@media (max-width: 768px) {
+    .avatar-container {
+        width: 250px; /* Nhỏ lại trên mobile để không bị tràn màn hình */
+        height: 250px;
+    }
+}
 
         @keyframes gradientBorder {
             0% { background-position: 0% 50%; }
@@ -398,12 +421,21 @@
             </div>
 
             <div class="timeline-container relative py-10">
-                
-                <!-- Item 1 -->
+                  <div class="timeline-item mb-12 w-full md:w-1/2 relative z-10" data-aos="fade-left">
+                    <div class="timeline-dot" style="border-color: #ff00ea; box-shadow: 0 0 10px #ff00ea;"></div>
+                    <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-pink">
+                        <span class="inline-block py-1 px-3 rounded bg-neon-pink/20 text-neon-pink text-sm font-bold mb-3 border border-neon-pink/30">7/2026 - Hiện Tại</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Phó Phòng Tổ Chức Sự Kiện</h3>
+                        <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>MEKONG PRO</h4>
+                        <p class="text-sm text-gray-300"><li>Lên ý tưởng, lập kế hoạch và trực tiếp điều phối các chương trình, sự kiện.</li>
+            <li>Quản lý ngân sách, giám sát tiến độ thi công và xử lý tình huống phát sinh.</li>
+            <li>Đào tạo, dẫn dắt đội ngũ nhân sự và làm việc trực tiếp với các đối tác.</li></p>
+                    </div>
+                </div>
                 <div class="timeline-item mb-12 w-full md:w-1/2 relative z-10" data-aos="fade-right">
                     <div class="timeline-dot"></div>
                     <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-cyan">
-                        <span class="inline-block py-1 px-3 rounded bg-neon-cyan/20 text-neon-cyan text-sm font-bold mb-3 border border-neon-cyan/30">10/2024 - Hiện tại</span>
+                        <span class="inline-block py-1 px-3 rounded bg-neon-cyan/20 text-neon-cyan text-sm font-bold mb-3 border border-neon-cyan/30">10/2024 - 7/2026</span>
                         <h3 class="text-xl font-bold text-white mb-1">Trưởng phòng</h3>
                         <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>HYUNDAI QUỐC VIỆT</h4>
                         <p class="text-sm text-gray-300">Quản lý và chịu trách nhiệm toàn bộ các hoạt động truyền thông, tổ chức sự kiện tại đại lý. Đảm bảo nhận diện thương hiệu và KPI đề ra.</p>
