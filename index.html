@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Trung Đúng - Truyền Thông & Sự Kiện</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-dark': '#0f172a',
+                        'brand-darker': '#020617',
+                        'neon-cyan': '#00f3ff',
+                        'neon-pink': '#ff00ea',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Particles container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Neon Glow Effects */
+        .text-glow-cyan {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.5);
+        }
+        
+        .text-glow-pink {
+            text-shadow: 0 0 10px rgba(255, 0, 234, 0.7), 0 0 20px rgba(255, 0, 234, 0.5);
+        }
+
+        .box-glow {
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .box-glow:hover {
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5), inset 0 0 15px rgba(0, 243, 255, 0.2);
+            border-color: rgba(0, 243, 255, 0.8);
+            transform: translateY(-5px);
+        }
+
+        /* Avatar Animation */
+        .avatar-container {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .avatar-container::before {
+            content: '';
+            position: absolute;
+            top: -5px; right: -5px; bottom: -5px; left: -5px;
+            background: linear-gradient(45deg, #00f3ff, #ff00ea, #00f3ff);
+            border-radius: 50%;
+            z-index: -1;
+            background-size: 400%;
+            animation: gradientBorder 3s linear infinite;
+            filter: blur(8px);
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Typing Effect cursor */
+        .typed-cursor {
+            opacity: 1;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, #00f3ff, #ff00ea);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px #00f3ff;
+        }
+        .timeline-item {
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 40px;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 40px;
+        }
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #020617;
+            border: 4px solid #00f3ff;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px #00f3ff;
+            animation: pulse 2s infinite;
+        }
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        @media screen and (max-width: 768px) {
+            .timeline-container::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item:nth-child(even) { left: 0%; }
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot { left: 21px; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+
+        /* Skill bars */
+        .skill-bar-fill {
+            width: 0; /* Starts at 0 for animation */
+            transition: width 1.5s cubic-bezier(0.1, 0.5, 0.1, 1);
+        }
+
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background: linear-gradient(90deg, transparent, #00f3ff, transparent);
+        }
+        
+        /* Navigation hover effect */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #00f3ff;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-brand-darker/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="font-heading font-bold text-xl text-white tracking-widest uppercase">
+                        <span class="text-neon-cyan">N</span>T<span class="text-neon-pink">D</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link text-white hover:text-neon-cyan px-3 py-2 rounded-md text-sm font-medium uppercase tracking-wide">Trang chủ</a>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-sm font-medium uppercase tracking-wide">Giới thiệu</a>
+                        <a href="#experience" class="nav-link text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-sm font-medium uppercase tracking-wide">Kinh nghiệm</a>
+                        <a href="#skills" class="nav-link text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-sm font-medium uppercase tracking-wide">Kỹ năng</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-sm font-medium uppercase tracking-wide">Liên hệ</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i class="fas fa-bars text-2xl text-neon-cyan"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden bg-brand-dark" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+                <a href="#home" class="block text-white hover:text-neon-cyan px-3 py-2 rounded-md text-base font-medium">Trang chủ</a>
+                <a href="#about" class="block text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-base font-medium">Giới thiệu</a>
+                <a href="#experience" class="block text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-base font-medium">Kinh nghiệm</a>
+                <a href="#skills" class="block text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-base font-medium">Kỹ năng</a>
+                <a href="#contact" class="block text-gray-300 hover:text-neon-cyan px-3 py-2 rounded-md text-base font-medium">Liên hệ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <div id="particles-js"></div>
+        
+        <div class="content-wrapper text-center px-4 z-10 w-full max-w-4xl mx-auto">
+            <div class="flex justify-center mb-8" data-aos="zoom-in" data-aos-duration="1500">
+                <div class="avatar-container w-40 h-40 md:w-56 md:h-56 rounded-full p-1 bg-brand-darker relative">
+                    <!-- Placeholder image matching dimensions, using a generic avatar -->
+                    <img src="1790844065885_1467310116079439260_1467310116079439260_ae4f93d43ecced189d53d07c55bd8b09.jpg" alt="Nguyễn Trung Đúng" class="w-full h-full object-cover rounded-full border-2 border-brand-dark relative z-10">
+                </div>
+            </div>
+            
+            <h1 class="font-heading text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight" data-aos="fade-up" data-aos-delay="300">
+                NGUYỄN TRUNG <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-pink">ĐÚNG</span>
+            </h1>
+            
+            <div class="text-xl md:text-3xl font-medium mb-6 text-gray-300 h-10" data-aos="fade-up" data-aos-delay="600">
+                Chuyên gia <span id="typed-text" class="text-neon-cyan font-bold"></span><span class="typed-cursor text-neon-cyan">|</span>
+            </div>
+            
+            <p class="text-gray-400 max-w-2xl mx-auto mb-10 text-sm md:text-base leading-relaxed" data-aos="fade-up" data-aos-delay="900">
+                "Biến ý tưởng thành những sự kiện bùng nổ. Sáng tạo, chi tiết và luôn hướng tới sự hoàn hảo trong từng khoảnh khắc."
+            </p>
+            
+            <div data-aos="zoom-in-up" data-aos-delay="1200">
+                <a href="#about" class="inline-block px-8 py-3 rounded-full bg-transparent border-2 border-neon-cyan text-neon-cyan font-semibold hover:bg-neon-cyan hover:text-brand-darker transition-all duration-300 shadow-[0_0_15px_rgba(0,243,255,0.4)] hover:shadow-[0_0_25px_rgba(0,243,255,0.8)] uppercase tracking-wider text-sm">
+                    Khám phá Profile
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+            <a href="#about" class="text-neon-cyan/50 hover:text-neon-cyan transition-colors">
+                <i class="fas fa-chevron-down text-3xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-brand-dark relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="section-title text-3xl md:text-4xl font-heading font-bold text-white uppercase tracking-wider mb-4 text-glow-cyan">Giới thiệu</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
+                <!-- Info Box -->
+                <div class="box-glow bg-brand-darker/50 p-8 rounded-2xl backdrop-blur-sm" data-aos="fade-right">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-user-astronaut text-3xl text-neon-pink mr-4 animate-pulse"></i>
+                        <h3 class="text-2xl font-semibold text-white">Về Bản Thân</h3>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed mb-6 text-justify">
+                        Bản thân là người năng động, có kinh nghiệm trong lĩnh vực tổ chức sự kiện. Tôi đã tham gia lên kế hoạch, điều phối và triển khai nhiều chương trình khác nhau như sự kiện doanh nghiệp, khai trương và các hoạt động quảng bá.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed text-justify">
+                        Tôi có khả năng làm việc nhóm tốt, xử lý tình huống nhanh và luôn chú trọng đến chi tiết để đảm bảo sự kiện diễn ra suôn sẻ và hiệu quả.
+                    </p>
+                </div>
+
+                <!-- Goals Box -->
+                <div class="box-glow bg-brand-darker/50 p-8 rounded-2xl backdrop-blur-sm" data-aos="fade-left" data-aos-delay="200">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-rocket text-3xl text-neon-cyan mr-4 animate-bounce"></i>
+                        <h3 class="text-2xl font-semibold text-white">Mục Tiêu</h3>
+                    </div>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-neon-cyan mt-1 mr-3"></i>
+                            <span>Phát triển bản thân và cống hiến ở môi trường phù hợp, chuyên nghiệp.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-neon-cyan mt-1 mr-3"></i>
+                            <span>Phấn đấu để đạt được các mục tiêu thăng tiến về lương và vị trí công việc.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-neon-cyan mt-1 mr-3"></i>
+                            <span>Làm việc trong môi trường có tính cầu tiến, công việc ổn định và lâu dài.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-neon-cyan mt-1 mr-3"></i>
+                            <span>Liên tục học hỏi thêm kinh nghiệm, nâng cao trình độ chuyên môn.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Basic Info -->
+    <section class="py-10 bg-brand-darker relative z-10 border-t border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+                <div data-aos="zoom-in" data-aos-delay="0" class="p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <i class="fas fa-calendar-alt text-2xl text-neon-cyan mb-2 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Ngày sinh</p>
+                    <p class="text-sm text-white font-medium">11/12/1997</p>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="100" class="p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <i class="fas fa-mars text-2xl text-neon-pink mb-2 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Giới tính</p>
+                    <p class="text-sm text-white font-medium">Nam</p>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="200" class="p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <i class="fas fa-ring text-2xl text-neon-cyan mb-2 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Hôn nhân</p>
+                    <p class="text-sm text-white font-medium">Độc thân</p>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="300" class="p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <i class="fas fa-phone-alt text-2xl text-neon-pink mb-2 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Điện thoại</p>
+                    <p class="text-sm text-white font-medium">0704910145</p>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="400" class="p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <i class="fas fa-envelope text-2xl text-neon-cyan mb-2 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Email</p>
+                    <p class="text-xs text-white font-medium truncate" title="trungdung.doubled@gmail.com">trungdung.doubled<br>@gmail.com</p>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="500" class="p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <i class="fas fa-map-marker-alt text-2xl text-neon-pink mb-2 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Địa chỉ</p>
+                    <p class="text-xs text-white font-medium">An Bình, Cần Thơ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-brand-dark relative z-10 overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-down">
+                <h2 class="section-title text-3xl md:text-4xl font-heading font-bold text-white uppercase tracking-wider mb-4 text-glow-pink">Kinh Nghiệm Làm Việc</h2>
+                <p class="text-gray-400">Hành trình phát triển trong ngành sự kiện & truyền thông</p>
+            </div>
+
+            <div class="timeline-container relative py-10">
+                
+                <!-- Item 1 -->
+                <div class="timeline-item mb-12 w-full md:w-1/2 relative z-10" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-cyan">
+                        <span class="inline-block py-1 px-3 rounded bg-neon-cyan/20 text-neon-cyan text-sm font-bold mb-3 border border-neon-cyan/30">10/2024 - Hiện tại</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Trưởng phòng</h3>
+                        <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>HYUNDAI QUỐC VIỆT</h4>
+                        <p class="text-sm text-gray-300">Quản lý và chịu trách nhiệm toàn bộ các hoạt động truyền thông, tổ chức sự kiện tại đại lý. Đảm bảo nhận diện thương hiệu và KPI đề ra.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="timeline-item mb-12 w-full md:w-1/2 relative z-10" data-aos="fade-left">
+                    <div class="timeline-dot" style="border-color: #ff00ea; box-shadow: 0 0 10px #ff00ea;"></div>
+                    <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-pink">
+                        <span class="inline-block py-1 px-3 rounded bg-neon-pink/20 text-neon-pink text-sm font-bold mb-3 border border-neon-pink/30">10/2022 - 10/2024</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Chuyên viên Marketing</h3>
+                        <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>HYUNDAI QUỐC VIỆT</h4>
+                        <p class="text-sm text-gray-300">Thực hiện các hoạt động Marketing, thiết kế, dựng video, livestream trên Tiktok/Facebook. Đảm nhận vai trò Host cho các chương trình sự kiện của đại lý.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="timeline-item mb-12 w-full md:w-1/2 relative z-10" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-cyan">
+                        <span class="inline-block py-1 px-3 rounded bg-neon-cyan/20 text-neon-cyan text-sm font-bold mb-3 border border-neon-cyan/30">04/2020 - 07/2022</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Phó Giám đốc</h3>
+                        <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>CÔNG TY TNHH MTV TRUYỀN THÔNG KIẾN TƯỜNG</h4>
+                        <p class="text-sm text-gray-300">Quản lý chung công tác Tài chính - Kế toán, Nhân sự thi công và điều hành kinh doanh mảng sự kiện, in ấn. Trực tiếp chỉ đạo các sự kiện lớn.</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="timeline-item mb-12 w-full md:w-1/2 relative z-10" data-aos="fade-left">
+                    <div class="timeline-dot" style="border-color: #ff00ea; box-shadow: 0 0 10px #ff00ea;"></div>
+                    <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-pink">
+                        <span class="inline-block py-1 px-3 rounded bg-neon-pink/20 text-neon-pink text-sm font-bold mb-3 border border-neon-pink/30">10/2019 - 04/2020</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Trưởng phòng Event</h3>
+                        <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>CÔNG TY TNHH MTV TRUYỀN THÔNG KIẾN TƯỜNG</h4>
+                        <p class="text-sm text-gray-300">Tổ chức sự kiện cho khách hàng, viết kịch bản, giám sát thi công, soạn thảo hợp đồng và quản lý doanh số phòng Event.</p>
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="timeline-item w-full md:w-1/2 relative z-10" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="box-glow bg-brand-darker/80 p-6 rounded-xl border-l-4 border-l-neon-cyan">
+                        <span class="inline-block py-1 px-3 rounded bg-neon-cyan/20 text-neon-cyan text-sm font-bold mb-3 border border-neon-cyan/30">10/2015 - 10/2019</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Nhân viên</h3>
+                        <h4 class="text-md text-gray-400 font-medium mb-3 uppercase tracking-wide"><i class="far fa-building mr-2"></i>CÔNG TY TNHH MTV TRUYỀN THÔNG KIẾN TƯỜNG</h4>
+                        <p class="text-sm text-gray-300">Tham gia khảo sát sự kiện, lắp đặt thi công và kinh doanh các mặt hàng của công ty.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section class="py-20 bg-brand-darker relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="zoom-in">
+                <h2 class="section-title text-3xl md:text-4xl font-heading font-bold text-white uppercase tracking-wider mb-4 text-glow-cyan">Học Vấn & Bằng Cấp</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Edu 1 -->
+                <div class="box-glow bg-brand-dark/50 p-8 rounded-2xl text-center group cursor-pointer" data-aos="flip-left" data-aos-delay="0">
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-neon-cyan to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(0,243,255,0.5)] group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-graduation-cap text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Thạc sĩ Luật kinh tế</h3>
+                    <p class="text-neon-cyan text-sm mb-4">08/2022 - 08/2025</p>
+                    <p class="text-gray-400 font-medium border-t border-gray-700 pt-4">Trường Đại học Cần Thơ</p>
+                </div>
+
+                <!-- Edu 2 -->
+                <div class="box-glow bg-brand-dark/50 p-8 rounded-2xl text-center group cursor-pointer" data-aos="flip-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-neon-pink to-purple-600 rounded-full flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(255,0,234,0.5)] group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-award text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Cử nhân</h3>
+                    <p class="text-neon-pink text-sm mb-4">Xếp loại: Giỏi</p>
+                    <p class="text-gray-400 font-medium border-t border-gray-700 pt-4">Đại học Nam Cần Thơ</p>
+                </div>
+
+                <!-- Edu 3 -->
+                <div class="box-glow bg-brand-dark/50 p-8 rounded-2xl text-center group cursor-pointer" data-aos="flip-right" data-aos-delay="400">
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-neon-cyan to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(0,243,255,0.5)] group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-language text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Cử nhân Ngôn Ngữ Anh</h3>
+                    <p class="text-neon-cyan text-sm mb-4">11/2023 - 07/2025</p>
+                    <p class="text-gray-400 font-medium border-t border-gray-700 pt-4">Trường Đại học Cửu Long</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-brand-dark relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="section-title text-3xl md:text-4xl font-heading font-bold text-white uppercase tracking-wider mb-4 text-glow-pink">Kỹ Năng & Chuyên Môn</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Hard Skills & Soft Skills (Bars) -->
+                <div class="space-y-8">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center" data-aos="fade-right"><i class="fas fa-laptop-code text-neon-cyan mr-3"></i> Kỹ năng nổi bật</h3>
+                    
+                    <!-- Skill Bar 1 -->
+                    <div class="skill-item" data-aos="fade-right" data-aos-delay="100">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-300 font-medium">Tổ chức sự kiện & Điều phối</span>
+                            <span class="text-neon-cyan font-bold">95%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 shadow-inner">
+                            <div class="skill-bar-fill bg-gradient-to-r from-blue-500 to-neon-cyan h-2.5 rounded-full shadow-[0_0_10px_#00f3ff]" data-target="95%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar 2 -->
+                    <div class="skill-item" data-aos="fade-right" data-aos-delay="200">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-300 font-medium">Thiết kế đồ họa (Photoshop,...)</span>
+                            <span class="text-neon-pink font-bold">85%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 shadow-inner">
+                            <div class="skill-bar-fill bg-gradient-to-r from-purple-500 to-neon-pink h-2.5 rounded-full shadow-[0_0_10px_#ff00ea]" data-target="85%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar 3 -->
+                    <div class="skill-item" data-aos="fade-right" data-aos-delay="300">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-300 font-medium">Thuyết trình & Giao tiếp</span>
+                            <span class="text-neon-cyan font-bold">90%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 shadow-inner">
+                            <div class="skill-bar-fill bg-gradient-to-r from-blue-500 to-neon-cyan h-2.5 rounded-full shadow-[0_0_10px_#00f3ff]" data-target="90%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Skill Bar 4 -->
+                    <div class="skill-item" data-aos="fade-right" data-aos-delay="400">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-300 font-medium">Tin học văn phòng (Word, Excel, PPT)</span>
+                            <span class="text-neon-pink font-bold">95%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 shadow-inner">
+                            <div class="skill-bar-fill bg-gradient-to-r from-purple-500 to-neon-pink h-2.5 rounded-full shadow-[0_0_10px_#ff00ea]" data-target="95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soft Skills Tags -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center" data-aos="fade-left"><i class="fas fa-users-cog text-neon-pink mr-3"></i> Kỹ năng mềm</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <div data-aos="zoom-in" data-aos-delay="100" class="px-6 py-3 rounded-full border border-neon-cyan/50 text-gray-200 hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-[0_0_15px_rgba(0,243,255,0.4)] transition-all cursor-default">
+                            <i class="fas fa-puzzle-piece mr-2 text-neon-cyan"></i> Giải quyết vấn đề
+                        </div>
+                        <div data-aos="zoom-in" data-aos-delay="150" class="px-6 py-3 rounded-full border border-neon-pink/50 text-gray-200 hover:bg-neon-pink/10 hover:border-neon-pink hover:shadow-[0_0_15px_rgba(255,0,234,0.4)] transition-all cursor-default">
+                            <i class="fas fa-handshake mr-2 text-neon-pink"></i> Đàm phán thuyết phục
+                        </div>
+                        <div data-aos="zoom-in" data-aos-delay="200" class="px-6 py-3 rounded-full border border-neon-cyan/50 text-gray-200 hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-[0_0_15px_rgba(0,243,255,0.4)] transition-all cursor-default">
+                            <i class="fas fa-users mr-2 text-neon-cyan"></i> Làm việc nhóm
+                        </div>
+                        <div data-aos="zoom-in" data-aos-delay="250" class="px-6 py-3 rounded-full border border-neon-pink/50 text-gray-200 hover:bg-neon-pink/10 hover:border-neon-pink hover:shadow-[0_0_15px_rgba(255,0,234,0.4)] transition-all cursor-default">
+                            <i class="fas fa-ear-listen mr-2 text-neon-pink"></i> Lắng nghe thấu hiểu
+                        </div>
+                        <div data-aos="zoom-in" data-aos-delay="300" class="px-6 py-3 rounded-full border border-neon-cyan/50 text-gray-200 hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-[0_0_15px_rgba(0,243,255,0.4)] transition-all cursor-default">
+                            <i class="fas fa-comments mr-2 text-neon-cyan"></i> Tạo lập quan hệ
+                        </div>
+                        <div data-aos="zoom-in" data-aos-delay="350" class="px-6 py-3 rounded-full border border-neon-pink/50 text-gray-200 hover:bg-neon-pink/10 hover:border-neon-pink hover:shadow-[0_0_15px_rgba(255,0,234,0.4)] transition-all cursor-default">
+                            <i class="fas fa-video mr-2 text-neon-pink"></i> Livestream / Host
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer/Contact CTA -->
+    <section id="contact" class="py-20 bg-brand-darker relative z-10 border-t border-white/10">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-heading font-bold text-white mb-6" data-aos="fade-up">Sẵn sàng tạo nên sự kiện đột phá?</h2>
+            <p class="text-gray-400 mb-10" data-aos="fade-up" data-aos-delay="100">Hãy liên hệ với tôi để cùng nhau xây dựng những kế hoạch truyền thông và sự kiện ấn tượng nhất.</p>
+            
+            <div class="flex flex-wrap justify-center gap-6 mb-12" data-aos="zoom-in" data-aos-delay="200">
+                <a href="tel:0704910145" class="flex items-center px-8 py-4 rounded-full bg-brand-dark border border-neon-cyan text-white hover:bg-neon-cyan hover:text-brand-darker transition-all duration-300 shadow-[0_0_15px_rgba(0,243,255,0.2)] hover:shadow-[0_0_20px_rgba(0,243,255,0.6)]">
+                    <i class="fas fa-phone-alt mr-3"></i> 0704 910 145
+                </a>
+                <a href="mailto:trungdung.doubled@gmail.com" class="flex items-center px-8 py-4 rounded-full bg-brand-dark border border-neon-pink text-white hover:bg-neon-pink hover:text-brand-darker transition-all duration-300 shadow-[0_0_15px_rgba(255,0,234,0.2)] hover:shadow-[0_0_20px_rgba(255,0,234,0.6)]">
+                    <i class="fas fa-envelope mr-3"></i> Gửi Email
+                </a>
+            </div>
+            
+            <div class="text-gray-500 text-sm border-t border-white/10 pt-8">
+                &copy; 2026 Nguyen Trung Dung. Designed for Event & Media.
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // 1. Initialize AOS (Animate on Scroll)
+        AOS.init({
+            once: false, // whether animation should happen only once - while scrolling down
+            mirror: true, // whether elements should animate out while scrolling past them
+            offset: 100, // offset (in px) from the original trigger point
+            duration: 800, // values from 0 to 3000, with step 50ms
+        });
+
+        // 2. Initialize Particles.js (Background effect)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#00f3ff", "#ff00ea"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 3, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
+
+        // 3. Typing Effect
+        const textArray = ["Tổ chức sự kiện", "Truyền thông", "Marketing", "Event Planner"];
+        const typingDelay = 100;
+        const erasingDelay = 50;
+        const newTextDelay = 2000;
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        const typedTextSpan = document.getElementById("typed-text");
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else {
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } else {
+                textArrayIndex++;
+                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+
+        // 4. Animate Skill Bars on Scroll using Intersection Observer
+        const skillBars = document.querySelectorAll('.skill-bar-fill');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5 // Trigger when 50% of the element is visible
+        };
+
+        const skillObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const targetWidth = entry.target.getAttribute('data-target');
+                    entry.target.style.width = targetWidth;
+                    // Optional: Stop observing once animated
+                    // observer.unobserve(entry.target); 
+                } else {
+                    // Reset to 0 when out of view so it animates again when scrolling back
+                    entry.target.style.width = '0';
+                }
+            });
+        }, observerOptions);
+
+        skillBars.forEach(bar => {
+            skillObserver.observe(bar);
+        });
+    </script>
+</body>
+</html>
